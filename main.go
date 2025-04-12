@@ -1,16 +1,20 @@
 package main
 
 import (
-	"os"
 	"ghostlang/lexer"
+	"ghostlang/parser"
+	"os"
+
+	"github.com/sanity-io/litter"
 )
 
 func main() {
-	sourceBytes, _ := os.ReadFile("test.lang")
+	sourceBytes, _ := os.ReadFile("vars.lang")
 	source := string(sourceBytes)
-	
-	tks := lexer.Tokenize(string(source))
-	for _, token := range tks {
-		token.Print()
-	}
+
+	tokens := lexer.Tokenize(string(source))
+
+	ast := parser.Parse(tokens)
+	litter.Dump(ast)
+
 }

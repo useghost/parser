@@ -11,17 +11,17 @@ const (
 	TRUE
 	FALSE
 	NUMBER
-	STRING 
+	STRING
 	IDENTIFIER
 
 	//GROUPING
 	LEFT_BRACKET
 	RIGHT_BRACKET
-	LEFT_BRACE 
+	LEFT_BRACE
 	RIGHT_BRACE
 	LEFT_PAREN
 	RIGHT_PAREN
-	
+
 	//Equality
 	ASSINGMENT_EQUALS
 	EQUALS // equality check; ==
@@ -40,7 +40,7 @@ const (
 
 	//Smybols
 	DOT
-	DOUBLE_DOT //.. - [0..10]
+	DOUBLE_DOT      //.. - [0..10]
 	SPREAD_OPERATOR //...
 	SEMI_COLON
 	COLON
@@ -60,14 +60,14 @@ const (
 	MUL
 	MODULO
 
-	//Reserved keywords  
+	//Reserved keywords
 	LET //maybe change to set?
 	CONST
 	IMPORT
 	CLASS
 	NEW
 	FROM //import {a,b,c,} from "test.g" or import wholemodule from "test.g"
-	FN //funcdef
+	FN   //funcdef
 	IF
 	ELSE
 	ELSEIF
@@ -78,36 +78,37 @@ const (
 	AT_OPERATOR //@something above functions,
 	WASM_EXPORT //WASM.Export in the form of @WASM.Export
 	INCLUDES
-	TYPENAME //typename "hi" == 
-	
+	TYPENAME //typename "hi" ==
+	STRUCT
+
 	//MISC
 	EXCLUDE //exclude fn (is excluded when compiling, not just not exported)
 )
 
 var reserved_lu map[string]TokenKind = map[string]TokenKind{
-	"true":    TRUE,
-	"false":   FALSE,
-	"null":    NULL,
-	"let":     LET,
-	"const":   CONST,
-	"class":   CLASS,
-	"new":     NEW,
-	"import":  IMPORT,
-	"from":    FROM,
-	"fn":      FN,
-	"if":      IF,
-	"else":    ELSE,
-	"foreach": FOR_EACH,
-	"while":   WHILE,
-	"for":     FOR,
-	"export":  EXPORT,
-	"typename":  TYPENAME,
-	"includes":  INCLUDES,
+	"true":     TRUE,
+	"false":    FALSE,
+	"null":     NULL,
+	"let":      LET,
+	"const":    CONST,
+	"class":    CLASS,
+	"new":      NEW,
+	"import":   IMPORT,
+	"from":     FROM,
+	"fn":       FN,
+	"if":       IF,
+	"else":     ELSE,
+	"foreach":  FOR_EACH,
+	"while":    WHILE,
+	"for":      FOR,
+	"export":   EXPORT,
+	"typename": TYPENAME,
+	"includes": INCLUDES,
+	"struct":   STRUCT,
 }
 
-
 var TypeStrings = []string{
-	"EOF", 
+	"EOF",
 	"NULL",
 	"TRUE",
 	"FALSE",
@@ -121,7 +122,7 @@ var TypeStrings = []string{
 	"LEFT_PAREN",
 	"RIGHT_PAREN",
 	"ASSINGMENT_EQUALS",
-	"EQUALS", 
+	"EQUALS",
 	"NOT_EQUALS",
 	"NOT",
 	"LESS",
@@ -132,8 +133,8 @@ var TypeStrings = []string{
 	"AND",
 
 	"DOT",
-	"DOUBLE_DOT", 
-	"SPREAD_OPERATOR", 
+	"DOUBLE_DOT",
+	"SPREAD_OPERATOR",
 	"SEMI_COLON",
 	"COLON",
 	"QUESTION_OPERATOR",
@@ -148,13 +149,13 @@ var TypeStrings = []string{
 	"DIVIDE",
 	"MUL",
 	"MODULO",
-	"LET", 
+	"LET",
 	"CONST",
 	"IMPORT",
 	"CLASS",
 	"NEW",
 	"FROM",
-	"FN", 
+	"FN",
 	"IF",
 	"ELSE",
 	"ELSEIF",
@@ -162,15 +163,16 @@ var TypeStrings = []string{
 	"FOR_EACH",
 	"WHILE",
 	"EXPORT",
-	"AT_OPERATOR", 
-	"WASM_EXPORT", 
+	"AT_OPERATOR",
+	"WASM_EXPORT",
 	"INCLUDES",
 	"TYPENAME",
+	"STRUCT",
 	"EXCLUDE",
 }
 
 type Token struct {
-	Kind TokenKind
+	Kind  TokenKind
 	Value string
 }
 
