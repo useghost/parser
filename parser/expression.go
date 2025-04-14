@@ -46,11 +46,29 @@ func parse_primary_expr(p *parser) ast.Expr {
 			Value: p.advance().Value,
 		}
 	case lexer.IDENTIFIER:
-		return ast.StringExpr{
+		return ast.SymbolExpr{
 			Value: p.advance().Value,
 		}
 	default:
 		panic(fmt.Sprintf("cant create primary expression from %s\n", lexer.TypeString(p.currentTokenKind())))
+	}
+}
+
+func parse_member_expr(p *parser, left ast.Expr, bp bindingpower) ast.Expr {
+	// Assume we've just seen a DOT and the current token is the property name
+	p.advance() // consume the dot
+
+	if p.currentTokenKind() != lexer.IDENTIFIER {
+		panic(fmt.Sprintf("expected identifier after '.', got %s", lexer.TypeString(p.currentTokenKind())))
+	}
+
+	property := ast.SymbolExpr{
+		Value: p.advance().Value,
+	}
+
+	return ast.MemberExpr{
+		Object:   left,
+		Property: property,
 	}
 }
 
@@ -74,6 +92,7 @@ func parse_prefix_expr(p *parser) ast.Expr {
 		RightExpr: rhs,
 	}
 }
+
 func parse_assignment_expr(p *parser, left ast.Expr, bp bindingpower) ast.Expr {
 	operatorToken := p.advance()
 	rhs := parse_expr(p, assignment)
@@ -92,5 +111,24 @@ func parse_grouping_expr(p *parser) ast.Expr {
 		Opener:     left,
 		Expression: expr,
 		Closer:     right,
+	}
+}
+
+func parse_call_expr(p *parser, left ast.Expr, bp bindingpower) ast.Expr {
+	p.advance()
+	arguments := make([]ast.Expr, 0)
+
+	for p.hasTokens() && p.currentTokenKind() != lexer.RIGHT_PAREN {
+		arguments = append(arguments, parse_expr(p, assignment))
+
+		if p.currentTokenKind() != lexer.RIGHT_PAREN {
+			p.expect(lexer.COMMA)
+		}
+	}
+
+	p.expect(lexer.RIGHT_PAREN)
+	return ast.CallExpr{
+		Method:    left,
+		Arguments: arguments,
 	}
 }

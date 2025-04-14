@@ -1,1 +1,13 @@
-const EXAMPLE_NUMBER<int32> = 99;
+compiler option no_use_hex;
+
+let foo = "bar";
+
+set one<vector3>;
+infer const bitSize = -64;
+infer name = test.cra;
+
+doso.mething();
+
+fn _(mov number, y number) number {
+    return;
+}

@@ -62,7 +62,12 @@ const (
 
 	//Reserved keywords
 	LET //maybe change to set?
+	SET
+	INFER
 	CONST
+
+	COMPILER
+	OPTION
 	IMPORT
 	CLASS
 	NEW
@@ -90,14 +95,18 @@ var reserved_lu map[string]TokenKind = map[string]TokenKind{
 	"false":    FALSE,
 	"null":     NULL,
 	"let":      LET,
+	"set":      SET,
+	"infer":    INFER,
 	"const":    CONST,
 	"class":    CLASS,
+	"option":   OPTION,
 	"new":      NEW,
 	"import":   IMPORT,
 	"from":     FROM,
 	"fn":       FN,
 	"if":       IF,
 	"else":     ELSE,
+	"compiler": COMPILER,
 	"foreach":  FOR_EACH,
 	"while":    WHILE,
 	"for":      FOR,
@@ -149,8 +158,14 @@ var TypeStrings = []string{
 	"DIVIDE",
 	"MUL",
 	"MODULO",
+
 	"LET",
+	"SET",
+	"INFER",
 	"CONST",
+
+	"COMPILER",
+	"OPTION",
 	"IMPORT",
 	"CLASS",
 	"NEW",

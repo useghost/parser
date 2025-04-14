@@ -59,6 +59,11 @@ func createTokenLookups() {
 	led(lexer.OR, logical, parse_binary_expr)
 	led(lexer.DOUBLE_DOT, logical, parse_binary_expr) //low precedence
 
+	//member
+	led(lexer.DOT, member, parse_member_expr)
+	//call
+	led(lexer.LEFT_PAREN, call, parse_call_expr)
+
 	//Relational
 	led(lexer.LESS, relational, parse_binary_expr)
 	led(lexer.LESS_EQUALS, relational, parse_binary_expr)
@@ -85,4 +90,8 @@ func createTokenLookups() {
 
 	stmt(lexer.CONST, parse_declaration_stmt)
 	stmt(lexer.LET, parse_declaration_stmt)
+	stmt(lexer.SET, parse_declaration_stmt)
+	stmt(lexer.INFER, parse_infer_declaration_stmt)
+	stmt(lexer.COMPILER, parse_compiler_option_statement)
+	stmt(lexer.FN, parse_fn_declaration)
 }

@@ -6,18 +6,17 @@ import (
 )
 
 type regexPattern struct {
-	regex *regexp.Regexp
+	regex   *regexp.Regexp
 	handler regexHandler
 }
 
 type lexer struct {
 	patterns []regexPattern
-	Tokens []Token
-	source string
-	pos int
-	line int
+	Tokens   []Token
+	source   string
+	pos      int
+	line     int
 }
-
 
 func Tokenize(source string) []Token {
 	lex := CreateLexer(source)
@@ -31,7 +30,7 @@ func Tokenize(source string) []Token {
 				pattern.handler(lex, pattern.regex)
 				matchfound = true
 				break
-			}	
+			}
 		}
 
 		if !matchfound {
@@ -48,7 +47,7 @@ func (lex *lexer) advanceBy(n int) {
 }
 
 func (lex *lexer) currentByte() byte {
-	return lex.source[lex.pos];
+	return lex.source[lex.pos]
 }
 
 func (lex *lexer) advance() {
@@ -69,15 +68,15 @@ func (lex *lexer) end_of_file() bool {
 
 func CreateLexer(source string) *lexer {
 	return &lexer{
-		pos: 0,
-		line: 1,
+		pos:    0,
+		line:   1,
 		source: source,
 		Tokens: make([]Token, 0),
 		patterns: []regexPattern{
 			{regexp.MustCompile(`\s+`), skipHandler},
 			{regexp.MustCompile(`\/\/.*`), commentHandler},
 			{regexp.MustCompile(`"[^"]*"`), stringHandler},
-			{regexp.MustCompile(`[0-9]+(\.[0-9]+)?`), numberHandler},
+			{regexp.MustCompile(`[+-]?[0-9]+(\.[0-9]+)?`), numberHandler},
 			{regexp.MustCompile(`[a-zA-Z_][a-zA-Z0-9_]*`), symbolHandler},
 			{regexp.MustCompile(`\[`), defaultHandler(LEFT_BRACKET, "[")},
 			{regexp.MustCompile(`\]`), defaultHandler(RIGHT_BRACKET, "]")},
@@ -143,9 +142,6 @@ func symbolHandler(lex *lexer, regex *regexp.Regexp) {
 
 	lex.advanceBy(len(match))
 }
-
-
-
 
 func defaultHandler(kind TokenKind, value string) regexHandler {
 	return func(lex *lexer, _ *regexp.Regexp) {

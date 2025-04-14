@@ -54,3 +54,25 @@ type GroupExpression struct {
 }
 
 func (n GroupExpression) expr() {}
+
+type MemberExpr struct {
+	Object   Expr       // could be SymbolExpr, or nested MemberExpr
+	Property SymbolExpr // the right-hand identifier (e.g. 'name' in 'user.name')
+}
+
+func (m MemberExpr) expr() {}
+
+type CallExpr struct {
+	Method    Expr
+	Arguments []Expr
+}
+
+func (n CallExpr) expr() {}
+
+type AnonymousFunctionExpr struct {
+	Arugments  []Argument
+	Body       []Stmt
+	ReturnType Type
+}
+
+func (n AnonymousFunctionExpr) expr() {}

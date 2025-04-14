@@ -42,6 +42,10 @@ func (p *parser) advance() lexer.Token {
 	return token
 }
 
+func (p *parser) nextToken() lexer.Token {
+	return p.tokens[p.pos+1]
+}
+
 func (p *parser) hasTokens() bool {
 	return p.pos < len(p.tokens) && p.currentTokenKind() != lexer.EOF
 }
