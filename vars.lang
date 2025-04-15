@@ -9,5 +9,5 @@ infer name = test.cra;
 doso.mething();
 
 fn _(mov number, y number) number {
-    return;
+    return 6;
 }

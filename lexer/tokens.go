@@ -4,7 +4,7 @@ import "fmt"
 
 type TokenKind int
 
-//some must be non case-sensitive, match it in regex.
+// some must be non case-sensitive, match it in regex.
 const (
 	EOF TokenKind = iota
 	NULL
@@ -73,6 +73,7 @@ const (
 	NEW
 	FROM //import {a,b,c,} from "test.g" or import wholemodule from "test.g"
 	FN   //funcdef
+	RETURN
 	IF
 	ELSE
 	ELSEIF
@@ -104,6 +105,7 @@ var reserved_lu map[string]TokenKind = map[string]TokenKind{
 	"import":   IMPORT,
 	"from":     FROM,
 	"fn":       FN,
+	"return":   RETURN,
 	"if":       IF,
 	"else":     ELSE,
 	"compiler": COMPILER,
@@ -171,6 +173,7 @@ var TypeStrings = []string{
 	"NEW",
 	"FROM",
 	"FN",
+	"RETURN",
 	"IF",
 	"ELSE",
 	"ELSEIF",

@@ -169,3 +169,18 @@ func parse_fn_declaration(p *parser) ast.Stmt {
 		Name:       functionName,
 	}
 }
+
+func parse_return_stmt(p *parser) ast.Stmt {
+	var returnExpression ast.Expr
+	p.advance()
+	if p.currentTokenKind() != lexer.SEMI_COLON {
+		returnExpression = parse_expr(p, default_bp)
+	} else {
+		returnExpression = nil
+	}
+	p.expect(lexer.SEMI_COLON)
+
+	return ast.ReturnStatement{
+		ValueExpression: returnExpression,
+	}
+}

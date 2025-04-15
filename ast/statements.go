@@ -41,3 +41,9 @@ type FunctionDeclarationStmt struct {
 }
 
 func (n FunctionDeclarationStmt) stmt() {}
+
+type ReturnStatement struct {
+	ValueExpression Expr
+}
+
+func (n ReturnStatement) stmt() {}
