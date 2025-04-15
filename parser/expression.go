@@ -94,6 +94,13 @@ func parse_prefix_expr(p *parser) ast.Expr {
 	}
 }
 
+func parse_typename_expr(p *parser) ast.Expr {
+	p.advance()
+	exp := parse_expr(p, default_bp)
+	return ast.TypenameExpression{
+		Expression: exp,
+	}
+}
 func parse_assignment_expr(p *parser, left ast.Expr, bp bindingpower) ast.Expr {
 	operatorToken := p.advance()
 	rhs := parse_expr(p, assignment)
@@ -132,4 +139,62 @@ func parse_call_expr(p *parser, left ast.Expr, bp bindingpower) ast.Expr {
 		Method:    left,
 		Arguments: arguments,
 	}
+}
+
+func parse_fn_expr_params_body(p *parser) ([]ast.Argument, ast.Type, []ast.Stmt) {
+	p.expect(lexer.LEFT_PAREN)
+	functionParams := make([]ast.Argument, 0)
+	for p.hasTokens() && p.currentTokenKind() != lexer.RIGHT_PAREN {
+		paramName := p.expect(lexer.IDENTIFIER).Value
+		paramType := parse_type(p, default_bp)
+
+		functionParams = append(functionParams, ast.Argument{
+			Name: paramName,
+			Type: paramType,
+		})
+
+		if !p.currentToken().IsOfTypes(lexer.RIGHT_PAREN, lexer.EOF) {
+			p.expect(lexer.COMMA)
+		}
+	}
+
+	p.expect(lexer.RIGHT_PAREN)
+	var returnType ast.Type
+
+	if p.currentTokenKind() != lexer.LEFT_BRACE {
+		returnType = parse_type(p, default_bp)
+	}
+
+	functionBody := ast.ExpectStmt[ast.BlockStmt](parse_block_stmt(p)).Body
+
+	return functionParams, returnType, functionBody
+}
+
+func parse_fn_expr(p *parser) ast.Expr {
+	p.advance()
+	fmt.Println(lexer.TypeString(p.currentTokenKind()))
+	if !p.currentToken().IsOfTypes(lexer.IDENTIFIER, lexer.LEFT_PAREN) {
+		panic("Error: Parser did not recieve either function name or left parenthesis in function expression")
+	}
+	var nameToken lexer.Token = p.currentToken()
+
+	if nameToken.Kind == lexer.IDENTIFIER {
+		p.advance()
+		functionParams, returnType, functionBody := parse_fn_expr_params_body(p)
+		return ast.AnonymousFunctionExpr{
+			Arguments:    functionParams,
+			ReturnType:   returnType,
+			Body:         functionBody,
+			OptionalName: nameToken.Value,
+		}
+	} else {
+		functionParams, returnType, functionBody := parse_fn_expr_params_body(p)
+		return ast.AnonymousFunctionExpr{
+			Arguments:    functionParams,
+			ReturnType:   returnType,
+			Body:         functionBody,
+			OptionalName: "",
+		}
+	}
+
 }

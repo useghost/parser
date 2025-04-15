@@ -9,7 +9,7 @@ infer name = test.cra;
 doso.mething();
 
 fn _(mov number, y number) number {
-    return 6;
+    return fn c(_ number){return 6;};
 }
 
 do_so.mething(_);

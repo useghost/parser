@@ -70,9 +70,10 @@ type CallExpr struct {
 func (n CallExpr) expr() {}
 
 type AnonymousFunctionExpr struct {
-	Arugments  []Argument
-	Body       []Stmt
-	ReturnType Type
+	Arguments    []Argument
+	Body         []Stmt
+	OptionalName string
+	ReturnType   Type
 }
 
 func (n AnonymousFunctionExpr) expr() {}
@@ -82,3 +83,9 @@ type ByteStringExpr struct {
 }
 
 func (n ByteStringExpr) expr() {}
+
+type TypenameExpression struct {
+	Expression Expr
+}
+
+func (n TypenameExpression) expr() {}

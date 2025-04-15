@@ -79,12 +79,16 @@ func createTokenLookups() {
 	led(lexer.DIVIDE, additive, parse_binary_expr)
 	led(lexer.MODULO, additive, parse_binary_expr)
 
+	//idfk
+	nud(lexer.FN, parse_fn_expr)
+
 	// < lit or symbol >
 	nud(lexer.NUMBER, parse_primary_expr)
 	nud(lexer.STRING, parse_primary_expr)
 	nud(lexer.IDENTIFIER, parse_primary_expr)
 	nud(lexer.MINUS, parse_prefix_expr)
 	nud(lexer.LEFT_PAREN, parse_grouping_expr)
+	nud(lexer.TYPENAME, parse_typename_expr)
 
 	// < statements >
 
