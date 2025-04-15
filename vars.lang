@@ -11,3 +11,5 @@ doso.mething();
 fn _(mov number, y number) number {
     return 6;
 }
+
+do_so.mething(_);

@@ -41,6 +41,7 @@ func parse_primary_expr(p *parser) ast.Expr {
 			// Type: inferType()
 			// ParsedValue: parseNumber()
 		}
+
 	case lexer.STRING:
 		return ast.StringExpr{
 			Value: p.advance().Value,

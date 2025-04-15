@@ -76,3 +76,9 @@ type AnonymousFunctionExpr struct {
 }
 
 func (n AnonymousFunctionExpr) expr() {}
+
+type ByteStringExpr struct {
+	Value string
+}
+
+func (n ByteStringExpr) expr() {}
