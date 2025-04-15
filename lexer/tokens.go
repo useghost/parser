@@ -101,6 +101,7 @@ var reserved_lu map[string]TokenKind = map[string]TokenKind{
 	"const":    CONST,
 	"class":    CLASS,
 	"option":   OPTION,
+	"exclude":  EXCLUDE,
 	"new":      NEW,
 	"import":   IMPORT,
 	"from":     FROM,

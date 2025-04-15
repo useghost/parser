@@ -172,7 +172,6 @@ func parse_fn_expr_params_body(p *parser) ([]ast.Argument, ast.Type, []ast.Stmt)
 
 func parse_fn_expr(p *parser) ast.Expr {
 	p.advance()
-	fmt.Println(lexer.TypeString(p.currentTokenKind()))
 	if !p.currentToken().IsOfTypes(lexer.IDENTIFIER, lexer.LEFT_PAREN) {
 		panic("Error: Parser did not recieve either function name or left parenthesis in function expression")
 	}

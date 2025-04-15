@@ -184,3 +184,10 @@ func parse_return_stmt(p *parser) ast.Stmt {
 		ValueExpression: returnExpression,
 	}
 }
+
+func parse_exclude_fn_stmt(p *parser) ast.Stmt {
+	p.advance()
+	return ast.ExcludeFunctionStmt{
+		FunctionDeclaration: parse_fn_declaration(p),
+	}
+}

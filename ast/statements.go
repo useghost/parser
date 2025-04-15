@@ -47,3 +47,9 @@ type ReturnStatement struct {
 }
 
 func (n ReturnStatement) stmt() {}
+
+type ExcludeFunctionStmt struct {
+	FunctionDeclaration Stmt
+}
+
+func (n ExcludeFunctionStmt) stmt() {}
