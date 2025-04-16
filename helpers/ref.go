@@ -5,8 +5,6 @@ import (
 	"reflect"
 )
 
-// Expected type is passed as a generic and this method will use reflection to compare the underlying type agains T.
-// Returns the casted type or panics if it fails. TODO: Return error instead of panic
 func ExpectType[T any](r any) T {
 	expectedType := reflect.TypeOf((*T)(nil)).Elem()
 	recievedType := reflect.TypeOf(r)

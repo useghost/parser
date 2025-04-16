@@ -191,3 +191,51 @@ func parse_exclude_fn_stmt(p *parser) ast.Stmt {
 		FunctionDeclaration: parse_fn_declaration(p),
 	}
 }
+
+func parse_export_fn_statement(p *parser) ast.Stmt {
+	p.advance()
+	return ast.ExportFunctionStmt{
+		FunctionDeclaration: parse_fn_declaration(p),
+	}
+}
+
+func parse_import_stmt(p *parser) ast.Stmt {
+	p.advance()
+	sourceToken := p.expect(lexer.STRING)
+	sourceValue := sourceToken.Value
+
+	var specifier ast.SymbolExpr
+
+	if p.currentTokenKind() == lexer.AS {
+		p.advance()
+
+		if p.currentTokenKind() == lexer.LEFT_BRACE {
+			p.advance()
+
+			for p.currentTokenKind() != lexer.RIGHT_BRACE {
+				p.expect(lexer.IDENTIFIER)
+
+				if p.currentTokenKind() != lexer.RIGHT_BRACE {
+					p.expect(lexer.COMMA)
+				}
+			}
+
+			p.expect(lexer.RIGHT_BRACE)
+			specifier = ast.SymbolExpr{Value: "__destructured__"}
+		} else if p.currentTokenKind() == lexer.IDENTIFIER {
+			alias := p.advance()
+			specifier = ast.SymbolExpr{Value: alias.Value}
+		} else {
+			panic("Expected identifier or '{' after 'as' in import statement")
+		}
+	} else {
+		specifier = ast.SymbolExpr{Value: ""}
+	}
+
+	p.expect(lexer.SEMI_COLON)
+
+	return ast.ImportStatement{
+		Specifier:    specifier,
+		SourceString: sourceValue,
+	}
+}

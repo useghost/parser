@@ -53,3 +53,16 @@ type ExcludeFunctionStmt struct {
 }
 
 func (n ExcludeFunctionStmt) stmt() {}
+
+type ExportFunctionStmt struct {
+	FunctionDeclaration Stmt
+}
+
+func (n ExportFunctionStmt) stmt() {}
+
+type ImportStatement struct {
+	Specifier    Expr
+	SourceString string
+}
+
+func (n ImportStatement) stmt() {}

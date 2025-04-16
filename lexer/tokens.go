@@ -68,7 +68,10 @@ const (
 
 	COMPILER
 	OPTION
+
 	IMPORT
+	AS
+
 	CLASS
 	NEW
 	FROM //import {a,b,c,} from "test.g" or import wholemodule from "test.g"
@@ -106,6 +109,7 @@ var reserved_lu map[string]TokenKind = map[string]TokenKind{
 	"import":   IMPORT,
 	"from":     FROM,
 	"fn":       FN,
+	"as":       AS,
 	"return":   RETURN,
 	"if":       IF,
 	"else":     ELSE,
@@ -170,6 +174,7 @@ var TypeStrings = []string{
 	"COMPILER",
 	"OPTION",
 	"IMPORT",
+	"AS",
 	"CLASS",
 	"NEW",
 	"FROM",

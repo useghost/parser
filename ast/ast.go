@@ -14,6 +14,10 @@ type Type interface {
 	_type()
 }
 
-func ExpectStmt[T Stmt](expr Stmt) T {
+func ExpectExpr[T Expr](expr Expr) T {
 	return helpers.ExpectType[T](expr)
+}
+
+func ExpectStmt[T Stmt](stmt Stmt) T {
+	return helpers.ExpectType[T](stmt)
 }

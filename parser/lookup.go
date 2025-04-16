@@ -98,6 +98,9 @@ func createTokenLookups() {
 	stmt(lexer.INFER, parse_infer_declaration_stmt)
 	stmt(lexer.COMPILER, parse_compiler_option_statement)
 	stmt(lexer.EXCLUDE, parse_exclude_fn_stmt)
+	stmt(lexer.EXPORT, parse_export_fn_statement)
+
 	stmt(lexer.FN, parse_fn_declaration)
 	stmt(lexer.RETURN, parse_return_stmt)
+	stmt(lexer.IMPORT, parse_import_stmt)
 }

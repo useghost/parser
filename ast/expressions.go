@@ -1,6 +1,8 @@
 package ast
 
-import "ghostlang/lexer"
+import (
+	"ghostlang/lexer"
+)
 
 // literal expressions
 type NumberExpr struct {
@@ -89,3 +91,9 @@ type TypenameExpression struct {
 }
 
 func (n TypenameExpression) expr() {}
+
+type DereferenceExpression struct {
+	Expression []SymbolExpr
+}
+
+func (n DereferenceExpression) expr() {}
